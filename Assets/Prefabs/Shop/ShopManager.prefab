@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6787872638518464538
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5991709864128927819}
+  - component: {fileID: 332655787391481956}
+  m_Layer: 0
+  m_Name: ShopManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5991709864128927819
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6787872638518464538}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &332655787391481956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6787872638518464538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54ab07a263a2b4495883658d0305bb1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shopBombItems:
+  - poolItem:
+      prefab: {fileID: 5029213712009993433, guid: 02c75519c1b524e48974f8edbff9d3fd, type: 3}
+      size: 5
+    bombItem:
+      name: BombBase
+      sprite: {fileID: -1931244965, guid: 2374c99e7a87b41319f5e8ebb00e5058, type: 3}
+      count: 0
+      isLimited: 0
+    unlockLevel: 0
+    price: 0
+    isBuy: 1
+  - poolItem:
+      prefab: {fileID: 5029213712009993433, guid: c7d814e504ba14a909a162447abe159c, type: 3}
+      size: 5
+    bombItem:
+      name: BombHorizontal
+      sprite: {fileID: 1108106370, guid: 2374c99e7a87b41319f5e8ebb00e5058, type: 3}
+      count: 3
+      isLimited: 1
+    unlockLevel: 0
+    price: 0
+    isBuy: 1
+  - poolItem:
+      prefab: {fileID: 5029213712009993433, guid: f2ccf4c967bd240189fdfceca441900f, type: 3}
+      size: 5
+    bombItem:
+      name: BombDrill
+      sprite: {fileID: -814605260, guid: 2374c99e7a87b41319f5e8ebb00e5058, type: 3}
+      count: 3
+      isLimited: 1
+    unlockLevel: 0
+    price: 0
+    isBuy: 1
+  - poolItem:
+      prefab: {fileID: 5029213712009993433, guid: b982fd42ec71a4d4e87ad5f03a08e267, type: 3}
+      size: 5
+    bombItem:
+      name: BombVertical
+      sprite: {fileID: 1846553379, guid: 2374c99e7a87b41319f5e8ebb00e5058, type: 3}
+      count: 3
+      isLimited: 1
+    unlockLevel: 0
+    price: 0
+    isBuy: 1

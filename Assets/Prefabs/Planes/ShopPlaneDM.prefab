@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &422403303656808262
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5702489760275046424}
+  - component: {fileID: 3508233343432869535}
+  m_Layer: 0
+  m_Name: ShopPlaneDM
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5702489760275046424
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 422403303656808262}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3508233343432869535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 422403303656808262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0669bb03727045f3bdd4a1f1a9aa3c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shopPlanes:
+  - shopItem:
+      isShowItemInShop: 1
+      unlockLevel: 0
+      price: 0
+      itemName: Plane
+      itemDescription: "Le\xEDr\xE1s a bomb\xE1rol ez minden ir\xE1nyba fog robbanni"
+      isBuy: 1
+      isUsePlane: 1
+    shopPlaneItem:
+      prefab: {fileID: 7313926256608243900, guid: 07e24f28b0e8a419bad9c757b81bb2e7, type: 3}
+      shopImage: {fileID: -814605260, guid: 2374c99e7a87b41319f5e8ebb00e5058, type: 3}
+      speed: 5
+      dropBomb: 1
+      capacity: 0
+  - shopItem:
+      isShowItemInShop: 1
+      unlockLevel: 15
+      price: 20000
+      itemName: PlaneGreen
+      itemDescription: "Le\xEDr\xE1s a bomb\xE1rol ez minden ir\xE1nyba fog robbanni"
+      isBuy: 0
+      isUsePlane: 0
+    shopPlaneItem:
+      prefab: {fileID: 7313926256608243900, guid: 8b00f9cb0254349158f1d17188821354, type: 3}
+      shopImage: {fileID: -1931244965, guid: 2374c99e7a87b41319f5e8ebb00e5058, type: 3}
+      speed: 4
+      dropBomb: 1
+      capacity: 1
+  - shopItem:
+      isShowItemInShop: 1
+      unlockLevel: 18
+      price: 20000
+      itemName: PlaneRed
+      itemDescription: "Le\xEDr\xE1s a bomb\xE1rol ez minden ir\xE1nyba fog robbanni"
+      isBuy: 0
+      isUsePlane: 0
+    shopPlaneItem:
+      prefab: {fileID: 7313926256608243900, guid: fa3e4aa6f889e4c4383432340b3ce974, type: 3}
+      shopImage: {fileID: -1931244965, guid: 2374c99e7a87b41319f5e8ebb00e5058, type: 3}
+      speed: 3
+      dropBomb: 2
+      capacity: 1
+  - shopItem:
+      isShowItemInShop: 1
+      unlockLevel: 15
+      price: 20000
+      itemName: PlaneYellow
+      itemDescription: "Le\xEDr\xE1s a bomb\xE1rol ez minden ir\xE1nyba fog robbanni"
+      isBuy: 0
+      isUsePlane: 0
+    shopPlaneItem:
+      prefab: {fileID: 7313926256608243900, guid: 285ca6f6b09dc4cdc91472c4653a0413, type: 3}
+      shopImage: {fileID: -1931244965, guid: 2374c99e7a87b41319f5e8ebb00e5058, type: 3}
+      speed: 2
+      dropBomb: 2
+      capacity: 1
