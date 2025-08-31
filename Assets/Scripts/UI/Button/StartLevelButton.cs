@@ -10,7 +10,6 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Image))]
 public class StartLevelButton : ButtonBehaviour<LevelNavigationManager>
 {
-    //[SerializeField] int level = 0;                     // Level szint meghatározás
     [SerializeField] Sprite lockSprite;
     [SerializeField] Sprite buttonSprite;
     [SerializeField] TMP_Text titleText;

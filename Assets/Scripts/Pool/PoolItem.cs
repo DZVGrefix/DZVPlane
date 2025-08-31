@@ -12,11 +12,3 @@ public class PItemBuilding : PoolItem
 {
     public BuildingType buildingType;               // ez alapján szüröm az adatokat
 }
-
-/*
-[System.Serializable]
-public class PItemBomb : PoolItem
-{
-    public BombType bombType;
-}
-*/

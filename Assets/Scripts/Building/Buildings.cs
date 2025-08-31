@@ -1,5 +1,7 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /*
@@ -15,25 +17,38 @@ public class Buildings : MonoBehaviour
     [Header("Pool settings")]
     [SerializeField] PItemBuilding[] poolItems;                 // poolba rakando elemek
 
-    BuildingItem[,] _buildingsItem;                             // pálya model a memoriában
+    BuildingItem[,] _buildingItems;                             // pálya model a memoriában
     ObjectPooler _objPooler;                                    // poolra hívatkozás
-    BuildingLevel _buildingLevel;
+    GameManager _gameManager;
+    //BuildingLevel _buildingLevel;
     int _scoreLevel = 0;
+    float _curTimer;                                            // ha újra építem akkor mennyi időnként csinálja
+    float _reTimer;                                             // erre állítja vissza az épület építés időt
+    bool _isRebuilding;                                         // újra építés
+    int _reConstructionDistance;                                // újra építési távolság
 
 
     // Játék indítása - GameManager hívja meg
-    public Vector3[] StartGame(BuildingLevel buildingLevel)
+    public Vector3[] StartGame(BuildingLevel buildingLevel, GameManager gameManager)
     {
         _scoreLevel = 0;
         AddScore();
         _objPooler = ObjectPooler.Instance();
-        _buildingLevel = buildingLevel;
-        maxNumberOfBuildings = _buildingLevel.numberOfBuilding;
-        maxBuildingHeight = _buildingLevel.maxHeight;
-        minBuildingHeight = _buildingLevel.minHeight;
+        _gameManager = gameManager;
+
+        // épület építési beállítások
+        maxNumberOfBuildings = buildingLevel.numberOfBuilding;
+        maxBuildingHeight = buildingLevel.maxHeight;
+        minBuildingHeight = buildingLevel.minHeight;
+
+        // újra építési beállítások
+        _curTimer = 0;
+        _reTimer = buildingLevel.reTimer;
+        _isRebuilding = buildingLevel.isRebuilding;
+        _reConstructionDistance = buildingLevel.reConstructionDistance;
 
         // pálya tömb létrehozás
-        _buildingsItem = new BuildingItem[maxNumberOfBuildings, maxBuildingHeight];
+        _buildingItems = new BuildingItem[maxNumberOfBuildings, maxBuildingHeight];
 
         // elemek hozzáadása a pool-hoz
         if (_objPooler != null)
@@ -47,7 +62,16 @@ public class Buildings : MonoBehaviour
     // épület poziciója a memóriában
     public void SetBuildingsArray(Vector3 pos, BuildingItem bItem)
     {
-        _buildingsItem[(int)pos.x, (int)pos.y] = bItem;
+        _buildingItems[(int)pos.x, (int)pos.y] = bItem;
+    }
+
+    // épület újra építés elindítása
+    public void StartRebuilding()
+    {
+        if (_isRebuilding)
+        {
+            StartCoroutine(Rebuilding());
+        }
     }
 
     // pálya létrehozás
@@ -67,14 +91,16 @@ public class Buildings : MonoBehaviour
             // milyen magas legyen az épület.
             int height = Random.Range(minBuildingHeight, maxBuildingHeight);
 
+            // lekérdezek egy randomt tipus.
             BuildingType poolType = GetRandomPoolType();
+            // rászürök hogy csak ilyen tipusu prefabok legyenek.
             PoolItem[] filterPool = FilterPoolWithType(poolType);
 
             for (int y = 0; y < maxBuildingHeight; y++)
             {
                 Vector3 itemPos = new Vector3(width, y, 0);
                 Vector2 itemIndex = new Vector2(x, y);
-                _buildingsItem[x, y] = GetBuildingItem(y, height, poolType, filterPool, itemPos, itemIndex);
+                _buildingItems[x, y] = GetBuildingItem(y, height, poolType, filterPool, itemPos, itemIndex);
             }
         }
         return dropPos;
@@ -151,13 +177,14 @@ public class Buildings : MonoBehaviour
     }
     // vége ... 
 
+
     // Visszarakom a poolba és a memoriában is ki "null"-ázom
     public void BackPoolItem(GameObject buildingGO)
     {
         // visszarakás a pool-ba
         BuildingItem bItem = buildingGO.GetComponent<BuildingItem>();
         Vector3 pos = bItem.indexPos;
-        _buildingsItem[(int)pos.x, (int)pos.y] = null;
+        _buildingItems[(int)pos.x, (int)pos.y] = null;
 
         _objPooler.ObjectToPool(buildingGO);
     }
@@ -170,18 +197,18 @@ public class Buildings : MonoBehaviour
         {
             for (int y = 0; y < maxBuildingHeight; y++)
             {
-                if (_buildingsItem[x, y] == null)
+                if (_buildingItems[x, y] == null)
                 {
                     nullCounter++;
                 }
                 else if (nullCounter > 0)
                 {
-                    _buildingsItem[x, y].buildPos.y -= nullCounter;
-                    _buildingsItem[x, y].indexPos.y -= nullCounter;
-                    _buildingsItem[x, y].StartFall();
+                    _buildingItems[x, y].buildPos.y -= nullCounter;
+                    _buildingItems[x, y].indexPos.y -= nullCounter;
+                    _buildingItems[x, y].StartFall();
 
-                    _buildingsItem[x, y - nullCounter] = _buildingsItem[x, y];
-                    _buildingsItem[x, y] = null;
+                    _buildingItems[x, y - nullCounter] = _buildingItems[x, y];
+                    _buildingItems[x, y] = null;
                 }
             }
             nullCounter = 0;
@@ -201,5 +228,78 @@ public class Buildings : MonoBehaviour
     public int GetScore()
     {
         return _scoreLevel;
+    }
+
+
+    /*
+        VISSZAÉPÍTÉS
+    */
+    IEnumerator Rebuilding()
+    {
+        Debug.Log("Start Rebuilding");
+        Vector2 minPos = Vector2.zero;
+        _curTimer = _reTimer;
+        while (true)
+        {
+            if (_curTimer < 0)
+            {
+                Debug.Log("Lejárt az idő");
+                _curTimer = _reTimer;
+                // melyik a legalacsonyabb hely
+                minPos = GetMinBuilding();
+
+                // pozició meg vizsgálása hogy a repcsi legalább 2vel feljebb legyen.
+                Vector3 planePos = _gameManager.GetPlanePos();
+                if (planePos.y > minPos.y + _reConstructionDistance)
+                {
+                    Debug.Log("Épület építés");
+                    BuildingItem item = _buildingItems[(int)minPos.x, (int)minPos.y];
+                    string myName = item.name;
+                    Vector3 tPos = item.transform.position;
+                    Vector3 pos = new(tPos.x, tPos.y + 1, tPos.z);
+                    Vector2Int index = new((int)minPos.x, (int)minPos.y + 1);
+
+
+                    item = GetBuilding(myName, pos, index);
+                    /*
+                    Vector3 newPos = item.transform.position;
+                    newPos.y += 10;
+                    item.transform.position = newPos;
+                    item.StartFall();
+                    */
+                    item.StartScale();
+                    _buildingItems[(int)minPos.x, (int)minPos.y + 1] = item;
+                    
+                }
+            }
+            _curTimer -= Time.deltaTime;
+            yield return null;
+        }
+    }
+
+    Vector2 GetMinBuilding()
+    {
+        // melyik a legalacsonyabb hely
+        Vector2 result = Vector2.zero;
+        int minHeight = int.MaxValue;
+        for (int x = 0; x < maxNumberOfBuildings; x++)
+        {
+            int curHeight = 0;
+            for (int y = 0; y < maxBuildingHeight; y++)
+            {
+                if (_buildingItems[x, y] != null)
+                {
+                    curHeight = y;
+                }
+            }
+            // minimum földszint és egy emelett legyen.
+            if (curHeight > 1 && minHeight > curHeight)
+            {
+                result.x = x;
+                result.y = curHeight;
+                minHeight = curHeight;
+            }
+        }
+        return result;
     }
 }

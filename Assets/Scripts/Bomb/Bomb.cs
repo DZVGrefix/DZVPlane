@@ -6,18 +6,22 @@ using UnityEngine;
 public class Bomb : MonoBehaviour
 {
     [Header("Bomb settings")]
-    [SerializeField] int baseDestructiveEffect = 5;             // ha ez nulla akkor pusztul el a bomba.
     [SerializeField] ParticleSystem ps;                         // effect robanáskor
-
+    public int bombDMG;                             // ha ez nulla akkor pusztul el a bomba.
+    public float shrapnelDMG;                       // shrapnel dmg
+    public float fallSpeed;                         // bomba zuhanási sebessége
+    public int limitedBomb;                         // ha nem nulla akkor vonni kell
+    public bool isLimited;                          // ha igaz akkor számolom a limitedBomb-ot
     protected int destructiveEffect;
     protected DropBomb bombDrop = null;
+
 
     // Kezdő beállítások
     public virtual void Setup(DropBomb dropBomb)
     {
         PlayerData playerData = PlayerDM.Instance().GetPlayerData();
         bombDrop = dropBomb;
-        destructiveEffect = baseDestructiveEffect + playerData.PlusBombDmg;
+        destructiveEffect = bombDMG + playerData.PlusBombDmg;
     }
 
     // Ütközés detektálás

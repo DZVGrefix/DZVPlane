@@ -9,40 +9,38 @@ using UnityEngine;
 */
 public class PlayerMoving : MonoBehaviour
 {
-    [Header("Player moving settings")]
-    [SerializeField] float maxSpeed = 5f;           // Repülő sebessége
-
-
+    //[Header("Player moving settings")]
+    //[SerializeField] float maxSpeed = 5f;           // Repülő sebessége
 
     /* player data adatból ami rám vonatkozik az a: 
         - sebesség - PlaneSpeedReduction
         - újra ugyan az a magaság - FreezeHeight
     */
-    int freezeHeight;
-
+    int _freezeHeight;
     Vector3 _finishPos;
-
     Vector3 _stop;
     Vector3 _start;
+    Vector3 _target;
     float _speed;
     PlayerController _playerController;
     IEnumerator _playerMoving;
 
 
 
+
+
     // Kezdő értékek beállítása
     public void Setup(PlayerController playerController, BuildingLevel buildingLevel, PlayerData playerData)
     {
-        PlayerData p = PlayerDM.Instance().GetPlayerData();
-        freezeHeight = playerData.FreezeHeight;
-
+        _freezeHeight = playerData.FreezeHeight;
         _finishPos = buildingLevel.finishPlane;
 
         _start = buildingLevel.startPlane;
         _stop = buildingLevel.stopPlane;
         transform.position = _start;
+        _target = _stop;
 
-        _speed = maxSpeed * playerData.PlaneSpeedReduction;
+        _speed = playerController.speed * playerData.PlaneSpeedReduction;
         _playerController = playerController;
 
         _playerMoving = Moving();
@@ -58,9 +56,9 @@ public class PlayerMoving : MonoBehaviour
     {
         while (Vector3.Distance(transform.position, _finishPos) > .1f)
         {
-            transform.position = Vector3.MoveTowards(transform.position, _stop, _speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, _target, _speed * Time.deltaTime);
 
-            if (Vector3.Distance(transform.position, _stop) < .001f)
+            if (Vector3.Distance(transform.position, _target) < .001f)
             {
                 UpdateMoving();
             }
@@ -71,18 +69,40 @@ public class PlayerMoving : MonoBehaviour
     }
 
     // új mozgási adatok számolása
+    bool isRight = true;
     void UpdateMoving()
     {
-        if (freezeHeight <= 0)
+        // ha van feloldva hogy maradja egy magasságon akkor csökkentem az értéket
+        if (_freezeHeight > 0)
+        {
+            _freezeHeight--;
+        }
+        else
         {
             _stop = new Vector3(_stop.x, _stop.y - 1, 0);
             _start = new Vector3(_start.x, _start.y - 1, 0);
         }
+        // oda vissza menés be van kapcsolva
+        if (_playerController.isBackThere)
+        {
+            if (isRight)
+            {
+                isRight = !isRight;
+                transform.position = _stop;
+                _target = _start;
+            }
+            else
+            {
+                isRight = !isRight;
+                transform.position = _start;
+                _target = _stop;
+            }
+        }
         else
         {
-            freezeHeight--;
-        }        
-        transform.position = _start;
+            transform.position = _start;
+            _target = _stop;
+        }
     }
 
     void OnDrawGizmos()

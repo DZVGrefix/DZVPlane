@@ -27,20 +27,6 @@ public class WindowWinnerManager : MonoBehaviour
         StartCoroutine(Show());
     }
 
-    /*void Update()
-    {
-        if (_displayCoins != _score || _displayCoins != _coins)
-        {
-            float speed = _displaySpeed * Time.deltaTime;
-            _displayCoins = Mathf.Clamp(_displayScore, _score, speed);
-            _displayCoins = Mathf.Clamp(_displayCoins, _coins, speed);
-
-            scoreText.text = _displayScore.ToString("0");
-            coinsText.text = _displayCoins.ToString("0");
-
-            
-        }
-    }*/
     IEnumerator Show()
     {
         while (_displayCoins != _score || _displayCoins != _coins)

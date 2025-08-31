@@ -8,16 +8,14 @@ using UnityEngine;
 public class DropBomb : MonoBehaviour
 {
     [Header("Drop bomb settings")]
-    [SerializeField] int numberOfBombs = 1;             // ledobhato bombák száma
     [SerializeField] Transform dropPoint;               // Ledobási pont
-
-
     /* player data adatból ami rám vonatkozik az a: 
         - PlusDropBomb
     */
 
     Vector3[] _dropPositions;                           // hol lehet ledobni a bombákat
     BombItem[] _bombItems;                              // bombák 
+    LimitedBomb[] _limitedBombs;                        // bombák tömből át veszi azokat az adatokat ami a limitált bombákhoz kell.
     ObjectPooler _objectPooler;                         // pool hivatkozás
     int _indexBombItem;                                 // bombItems tömb aktiv eleme
     int _currentBombs;                                  // bomba ledobás számláló
@@ -27,17 +25,30 @@ public class DropBomb : MonoBehaviour
 
 
     // Kezdő beállítások 
-    public void Setup(PlayerData playerData, Vector3[] dropPos, BombItem[] items, Action myDelegate)
+    public void Setup(PlayerController playerController, PlayerData playerData, Vector3[] dropPos, BombItem[] items, Action myDelegate)
     {
         _dropPositions = dropPos;
         _bombItems = items;
+        SetLimitedBombs();
         _myDelegate = myDelegate;
         _objectPooler = ObjectPooler.Instance();
         _indexBombItem = 0;
-        _currentBombs = numberOfBombs + playerData.PlusDropBomb;
+        _currentBombs = playerController.numberOfBombs + playerData.PlusDropBomb;
 
         _gameGUI = GameGUI.Instance();
         RefreshGUI();
+    }
+    void SetLimitedBombs() {
+        _limitedBombs = new LimitedBomb[_bombItems.Length];
+        for (int i = 0; i < _bombItems.Length; i++)
+        {
+            LimitedBomb limitedBomb = new()
+            {
+                isLimited = _bombItems[i].prefab.isLimited,
+                limitedBomb = _bombItems[i].prefab.limitedBomb
+            };
+            _limitedBombs[i] = limitedBomb;
+        }
     }
 
     // az Object visszarakása a poolba
@@ -63,10 +74,10 @@ public class DropBomb : MonoBehaviour
     public void Drop()
     {
         // ha van aktív bomba akkor dobok csak le
-        if (_currentBombs > 0)
+        if (_currentBombs > 0 && isLimitedBombDrop())
         {
             // bomba létrehozás és beállítása
-            GameObject go = _objectPooler.SpawnFromPool(_bombItems[_indexBombItem].name, GetDropPosition(), dropPoint.rotation, null);
+            GameObject go = _objectPooler.SpawnFromPool(_bombItems[_indexBombItem].poolName, GetDropPosition(), dropPoint.rotation, null);
             Bomb bomb = go.GetComponent<Bomb>();
             bomb.Setup(this);
 
@@ -82,7 +93,7 @@ public class DropBomb : MonoBehaviour
     // válashtható bombák közti lépkedés
     public void PreviousBomb()
     {
-        _indexBombItem = (_indexBombItem == 0 ? _bombItems.Length - 1 : _indexBombItem - 1);
+        _indexBombItem = _indexBombItem == 0 ? _bombItems.Length - 1 : _indexBombItem - 1;
         RefreshGUI();
     }
     // válashtható bombák közti lépkedés
@@ -95,9 +106,29 @@ public class DropBomb : MonoBehaviour
     void RefreshGUI()
     {
         Sprite sprite = _bombItems[_indexBombItem].sprite;
-        string strCount = (_bombItems[_indexBombItem].isLimited ? _bombItems[_indexBombItem].count.ToString() : "");
-
+        string strCount = "";
+        if (_limitedBombs[_indexBombItem].isLimited) {
+            strCount = _limitedBombs[_indexBombItem].limitedBomb.ToString();
+        }
         _gameGUI.SetBombPanel(sprite, strCount);
+    }
+    bool isLimitedBombDrop()
+    {
+        LimitedBomb bItem = _limitedBombs[_indexBombItem];
+        if (bItem.isLimited)
+        {
+            if (bItem.limitedBomb > 0)
+            {
+                bItem.limitedBomb--;
+                RefreshGUI();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     // repcsi poziciója alapján meghatározom hol dobhatok le bombát
@@ -124,4 +155,10 @@ public class DropBomb : MonoBehaviour
             Gizmos.DrawLine(pos, new Vector3(pos.x, 0, 0));
         }
     }
+}
+
+//[System.Serializable]
+public class LimitedBomb {
+    public bool isLimited;
+    public int limitedBomb;
 }

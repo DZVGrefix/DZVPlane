@@ -6,10 +6,8 @@ using UnityEngine;
 */
 public class BombRaket : Bomb
 {
+    [Header("Bomb raket settings")]
     [SerializeField] int bombFall = 1;                  // Mennyit zuhanjon függölegesen
-    [SerializeField] float fallSpeed = 5f;              // Zuhanási sebesség
-    [SerializeField] float speed = 10f;                 // Vízszintes sebesség
-
     Vector3 _startHorizontalPos;                         // meddig zuhanjon
 
 
@@ -48,7 +46,7 @@ public class BombRaket : Bomb
 
         while (true)
         {
-            transform.Translate(speed * Time.deltaTime * Vector3.right);
+            transform.Translate((fallSpeed * 2) * Time.deltaTime * Vector3.right);
             yield return null;
         }
     }

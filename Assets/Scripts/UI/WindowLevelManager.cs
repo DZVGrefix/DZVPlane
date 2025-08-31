@@ -7,7 +7,6 @@ public class WindowLevelManager : MonoBehaviour
     // Level gombok beállítása 
     public void Setup()
     {
-        //PlayerDM.Instance().Setup();
         PlayerData playerData = PlayerDM.Instance().GetPlayerData();
         for (int i = 0; i < buttons.Length; i++)
         {

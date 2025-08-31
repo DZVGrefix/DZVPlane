@@ -20,7 +20,7 @@ public class EnvironmentManager : MonoBehaviour
     [SerializeField] float speedMin;
     [SerializeField] float speedMax;
     [SerializeField] float endXPosition;
-    [SerializeField] float respawnTimer;
+    [SerializeField] float reSpawnTimer;
 
 
     Dictionary<string, Color> _colors;
@@ -36,7 +36,7 @@ public class EnvironmentManager : MonoBehaviour
         CreateMountain(GetRanadomColor());
         CreateClouds();
 
-        _spawnTimer = respawnTimer;
+        _spawnTimer = reSpawnTimer;
         StartCoroutine(SpawnCloud());
     }
 
@@ -46,7 +46,7 @@ public class EnvironmentManager : MonoBehaviour
         {
             if (_spawnTimer < 0)
             {
-                _spawnTimer = respawnTimer;
+                _spawnTimer = reSpawnTimer;
                 NewCloud(true);
             }
             _spawnTimer -= Time.deltaTime;
