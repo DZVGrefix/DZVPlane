@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6325904240969590099
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7892232334875115827}
+  - component: {fileID: 7195209544438791776}
+  m_Layer: 0
+  m_Name: EnvironmentManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7892232334875115827
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6325904240969590099}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7195209544438791776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6325904240969590099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec3a19bb942341b0a61d201ad929602, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mountains:
+  - {fileID: -7172679316260163167, guid: 3c08c32e7e425429a90ac68830037dba, type: 3}
+  - {fileID: 7088796384596631143, guid: 7e523f6d068634adab51ca1eeb81563a, type: 3}
+  ground: {fileID: 6321126882083944129, guid: c97d5c6805236483db667132d0906d68, type: 3}
+  streets:
+  - {fileID: 1635560179341139791, guid: 81e07ae17a32840b5b83698c12c6e87b, type: 3}
+  - {fileID: 4267332023938192583, guid: 1b7b8184dc90c49a2adcd3fd2ff02515, type: 3}
+  numberOfStreet: 24
+  cloudPrefabs:
+  - {fileID: 2392633552851679906, guid: 835234d70b9ed4f15ad9a0382059f66c, type: 3}
+  - {fileID: 5183926493659194673, guid: 0e62521b6e19643468b6945ef9962504, type: 3}
+  - {fileID: 2088445498948761136, guid: 91dc481620bf74a94876335a6b8cc47f, type: 3}
+  - {fileID: 2029356218127417249, guid: 7945eb24466b247bb806a592e1c5bfce, type: 3}
+  numberOfClouds: 20
+  speedMin: 0.5
+  speedMax: 1.5
+  endXPosition: 55
+  respawnTimer: 5

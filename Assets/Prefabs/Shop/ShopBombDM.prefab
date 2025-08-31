@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1509921785740908065
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4059749376895818781}
+  - component: {fileID: 5202168457510392671}
+  m_Layer: 0
+  m_Name: ShopBombDM
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4059749376895818781
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1509921785740908065}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5202168457510392671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1509921785740908065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07451c09a24af45c4955d58c5763077f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shopBombs:
+  - shopItem:
+      isShowItemInShop: 0
+      unlockLevel: 0
+      price: 0
+      itemName: base
+      itemDescription: "Raketa felroban\xE1s ut\xE1n puszt\xEDt m\xE9g vizszintesen"
+      isBuy: 1
+      isUsePlane: 0
+    bombItem:
+      poolName: BombBase
+      sprite: {fileID: -1931244965, guid: 2374c99e7a87b41319f5e8ebb00e5058, type: 3}
+      prefab: {fileID: 5521200556730825375, guid: 02c75519c1b524e48974f8edbff9d3fd, type: 3}
+  - shopItem:
+      isShowItemInShop: 0
+      unlockLevel: 8
+      price: 1000
+      itemName: Fall Horizontal
+      itemDescription: "Raketa felroban\xE1s ut\xE1n puszt\xEDt m\xE9g vizszintesen"
+      isBuy: 0
+      isUsePlane: 0
+    bombItem:
+      poolName: BombFallHorizontal
+      sprite: {fileID: 1108106370, guid: 2374c99e7a87b41319f5e8ebb00e5058, type: 3}
+      prefab: {fileID: 6071842408406820853, guid: 224e6619e99e94b4eb84fc02f1ee47ca, type: 3}
+  - shopItem:
+      isShowItemInShop: 0
+      unlockLevel: 14
+      price: 1000
+      itemName: Star
+      itemDescription: "Roban\xE1s n\xE9gy ir\xE1nyba"
+      isBuy: 0
+      isUsePlane: 0
+    bombItem:
+      poolName: BombDrillStar
+      sprite: {fileID: -814605260, guid: 2374c99e7a87b41319f5e8ebb00e5058, type: 3}
+      prefab: {fileID: -3136954883052772875, guid: 279ef9450885e41679dff8592dace0f0, type: 3}
+  - shopItem:
+      isShowItemInShop: 0
+      unlockLevel: 19
+      price: 1000
+      itemName: Bomb Raket
+      itemDescription: "Raketa felroban\xE1s ut\xE1n puszt\xEDt m\xE9g vizszintesen"
+      isBuy: 0
+      isUsePlane: 0
+    bombItem:
+      poolName: BombRaket
+      sprite: {fileID: 1846553379, guid: 2374c99e7a87b41319f5e8ebb00e5058, type: 3}
+      prefab: {fileID: -5172685684022575133, guid: 9800500a4f206476db60fb02f10e35d9, type: 3}
