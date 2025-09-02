@@ -61,4 +61,4 @@ MonoBehaviour:
   speedMin: 0.5
   speedMax: 1.5
   endXPosition: 55
-  respawnTimer: 5
+  reSpawnTimer: 5

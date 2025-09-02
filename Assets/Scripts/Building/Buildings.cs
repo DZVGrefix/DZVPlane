@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 /*
@@ -10,6 +9,7 @@ using UnityEngine;
 public class Buildings : MonoBehaviour
 {
     [Header("Building settings")]
+    [Tooltip("Ezeket az adatokat mér nem innen veszi hanem a building data managerből")]
     [SerializeField] int maxNumberOfBuildings = 27;             // hány darab épület lesz a pályán
     [SerializeField] int maxBuildingHeight = 12;                // milyen magas legyen egy épület
     [SerializeField] int minBuildingHeight = 6;                 // Minumum épület magasság

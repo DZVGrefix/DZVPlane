@@ -141,9 +141,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78f92d916b4f048f482287ea5a298b6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDestructiveEffect: 5
-  damage: 1
-  particleSystem: {fileID: 0}
+  ps: {fileID: 0}
+  bombDMG: 5
+  shrapnelDMG: 0
+  fallSpeed: 5
+  limitedBomb: 0
+  isLimited: 0
 --- !u!1001 &2196711385897451895
 PrefabInstance:
   m_ObjectHideFlags: 0
